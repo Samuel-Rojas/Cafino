@@ -79,10 +79,3 @@ A full-stack web application for tracking coffee experiences, discovering coffee
 ## 👨‍💻 Author
 
 Samuel Rojas
-- Colorado State University - Class of 2028
-
-## 📄 License
-
-MIT License - feel free to use this project for learning!
-
----
