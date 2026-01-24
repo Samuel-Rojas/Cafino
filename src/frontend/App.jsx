@@ -1,42 +1,34 @@
-import { useState, useEffect } from 'react';
-import { supabase } from '../backend/utils/supabase';
+
+import { Routes, Route, Link } from 'react-router-dom'
+import Home from './pages/Home'
+import AddShop from './pages/AddShop'
+
+  
 
 function App() {
-  const [shops, setShops] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    testConnection();
-  }, []);
-
-  async function testConnection() {
-    try {
-      // Try to fetch coffee shops
-      const { data, error } = await supabase
-        .from('coffee_shops')
-        .select('*');
-      
-      if (error) throw error;
-      
-      console.log('Connected! Data:', data);
-      setShops(data);
-    } catch (error) {
-      console.error('Connection error:', error.message);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   return (
-    <div>
-      <h1>Coffee Tracker</h1>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <p>Connected to Supabase! Found {shops.length} coffee shops.</p>
-      )}
+    <div className="min-h-screen bg-coffee-50">
+      <nav className="bg-coffee-900 text-white p-4">
+        <div className="max-w-6xl mx-auto flex gap-6">
+          <Link to="/" className="hover:text-coffee-300 font-semibold">
+            My Shops
+          </Link>
+          <Link to="/add-shop" className="hover:text-coffee-300">
+            Add Shop
+          </Link>
+        </div>
+      </nav>
+
+      <div className="max-w-6xl mx-auto p-6">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/add-shop" element={<AddShop />} />
+          {/* We'll add shop detail route later */}
+          {/* <Route path="/shop/:id" element={<ShopDetail />} /> */}
+        </Routes>
+      </div>
     </div>
-  );
-}
+  )
+};
 
 export default App;
