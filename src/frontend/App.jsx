@@ -2,20 +2,26 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/Home'
 import AddShop from './pages/AddShop'
+import ShopDetail from './pages/ShopDetail'
 
   
 
 function App() {
   return (
-    <div className="min-h-screen bg-coffee-50">
-      <nav className="bg-coffee-900 text-white p-4">
-        <div className="max-w-6xl mx-auto flex gap-6">
-          <Link to="/" className="hover:text-coffee-300 font-semibold">
-            My Shops
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/30 to-amber-100/20">
+      <nav className="frosted-glass text-white p-5 shadow-lg sticky top-0 z-50">
+        <div className="max-w-6xl mx-auto flex gap-6 items-center">
+          <Link to="/" className="hover:text-amber-100 font-semibold text-xl tracking-tight transition-colors duration-200 text-white">
+            ☕ Cafino
           </Link>
-          <Link to="/add-shop" className="hover:text-coffee-300">
-            Add Shop
-          </Link>
+          <div className="flex gap-6 ml-auto">
+            <Link to="/" className="hover:text-amber-100 transition-colors duration-200 font-medium text-white/90">
+              My Shops
+            </Link>
+            <Link to="/add-shop" className="hover:text-amber-100 transition-colors duration-200 font-medium text-white/90">
+              Add Shop
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -23,8 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/add-shop" element={<AddShop />} />
-          {/* We'll add shop detail route later */}
-          {/* <Route path="/shop/:id" element={<ShopDetail />} /> */}
+          <Route path="/shop/:id" element={<ShopDetail />} />
         </Routes>
       </div>
     </div>
