@@ -2,32 +2,11 @@
 
 A full-stack web application for tracking coffee experiences, discovering coffee shops, and managing personal coffee preferences.
 
-## 🚀 Project Status
-
-**Currently in development** - 
-
-### Completed
-- [x] Database schema design (PostgreSQL via Supabase)
-- [x] Row-level security policies
-- [x] Backend setup with Supabase
-- [x] Project structure and configuration
-
-### In Progress
-- [ ] Frontend UI with React
-- [ ] Coffee entry form and management
-- [ ] Coffee shop finder with filters
-- [ ] Storyboard view with image uploads
-
-### Planned
-- [ ] User authentication
-- [ ] Responsive design
-- [ ] Deployment to Vercel
-- [ ] Advanced filtering and search
 
 ## 🛠️ Tech Stack
 
 **Frontend:**
-- React 18
+- React 19
 - Tailwind CSS
 - Vite
 
