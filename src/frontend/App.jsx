@@ -2,6 +2,7 @@
 import { Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/Home'
 import AddShop from './pages/AddShop'
+import AddOrder from './pages/AddOrder'
 import ShopDetail from './pages/ShopDetail'
 
   
@@ -30,6 +31,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/add-shop" element={<AddShop />} />
           <Route path="/shop/:id" element={<ShopDetail />} />
+          <Route path="/shop/:shopId/add-order" element={<AddOrder />} />
         </Routes>
       </div>
     </div>

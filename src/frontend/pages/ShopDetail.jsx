@@ -197,13 +197,24 @@ function ShopDetail() {
 
       {/* Coffee Orders Section */}
       <div className="animate-fade-in" style={{ animationDelay: '200ms' }}>
-        <div className="mb-6">
-          <h2 className="text-3xl font-bold text-amber-900 mb-2 tracking-tight">
-            Coffee Orders
-          </h2>
-          <p className="text-amber-800/70 font-medium">
-            {ordersLoading ? 'Loading orders...' : `${orders.length} ${orders.length === 1 ? 'order' : 'orders'} tracked`}
-          </p>
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <h2 className="text-3xl font-bold text-amber-900 mb-2 tracking-tight">
+              Coffee Orders
+            </h2>
+            <p className="text-amber-800/70 font-medium">
+              {ordersLoading ? 'Loading orders...' : `${orders.length} ${orders.length === 1 ? 'order' : 'orders'} tracked`}
+            </p>
+          </div>
+          <button
+            onClick={() => navigate(`/shop/${id}/add-order`)}
+            className="px-6 py-3 bg-amber-700 text-white rounded-2xl font-semibold hover:bg-amber-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+            </svg>
+            Add Order
+          </button>
         </div>
 
         {/* Orders Loading State */}
@@ -221,9 +232,18 @@ function ShopDetail() {
             <h3 className="text-xl font-semibold text-amber-900 mb-2">
               No Orders Yet
             </h3>
-            <p className="text-amber-800/70 font-medium">
+            <p className="text-amber-800/70 font-medium mb-6">
               Start tracking your coffee experiences at this shop!
             </p>
+            <button
+              onClick={() => navigate(`/shop/${id}/add-order`)}
+              className="px-6 py-3 bg-amber-700 text-white rounded-2xl font-semibold hover:bg-amber-800 active:scale-95 transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center gap-2"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+              </svg>
+              Add Your First Order
+            </button>
           </div>
         )}
 
