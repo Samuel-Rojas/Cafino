@@ -1,7 +1,6 @@
 # ☕ Cafino
 
 A full-stack web application for tracking coffee experiences, discovering coffee shops, and managing personal coffee preferences.
-
 ## 🛠️ Tech Stack
 
 **Frontend:**
