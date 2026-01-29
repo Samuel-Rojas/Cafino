@@ -1,11 +1,11 @@
-import { supabase } from '../utils/supabase';
+import { supabase } from "../utils/supabase";
 
 /**
  * Creates a new coffee shop in the database
- * 
+ *
  * This service function handles the creation of a coffee shop entry,
  * including data validation, transformation, and error handling.
- * 
+ *
  * @param {Object} shopData - The coffee shop data to insert
  * @param {string} shopData.name - Shop name (required)
  * @param {string} [shopData.address] - Shop address (optional)
@@ -13,10 +13,10 @@ import { supabase } from '../utils/supabase';
  * @param {string|string[]} [shopData.vibe] - Vibe tags as comma-separated string or array
  * @param {boolean} [shopData.good_for_work] - Whether shop is good for work (defaults to false)
  * @param {string} [shopData.photo_url] - URL to shop photo (optional)
- * 
+ *
  * @returns {Promise<{success: boolean, data: Object|null, error: string|null}>}
  * Returns an object with success status, inserted data (if successful), and error message (if failed)
- * 
+ *
  * @example
  * const result = await createCoffeeShop({
  *   name: "Brew & Bean",
@@ -29,11 +29,11 @@ import { supabase } from '../utils/supabase';
 export async function createCoffeeShop(shopData) {
   try {
     // Validate required fields
-    if (!shopData.name || shopData.name.trim() === '') {
+    if (!shopData.name || shopData.name.trim() === "") {
       return {
         success: false,
         data: null,
-        error: 'Shop name is required'
+        error: "Shop name is required",
       };
     }
 
@@ -48,17 +48,17 @@ export async function createCoffeeShop(shopData) {
 
     // Handle vibe tags - convert comma-separated string to array if needed
     if (shopData.vibe) {
-      if (typeof shopData.vibe === 'string') {
+      if (typeof shopData.vibe === "string") {
         // Split by comma, trim each tag, filter out empty strings
         insertData.vibe = shopData.vibe
-          .split(',')
-          .map(tag => tag.trim())
-          .filter(tag => tag.length > 0);
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag.length > 0);
       } else if (Array.isArray(shopData.vibe)) {
         // Already an array, just filter out empty strings
         insertData.vibe = shopData.vibe
-          .map(tag => typeof tag === 'string' ? tag.trim() : tag)
-          .filter(tag => tag.length > 0);
+          .map((tag) => (typeof tag === "string" ? tag.trim() : tag))
+          .filter((tag) => tag.length > 0);
       } else {
         insertData.vibe = [];
       }
@@ -67,28 +67,30 @@ export async function createCoffeeShop(shopData) {
     }
 
     // Validate seating_level if provided
-    if (insertData.seating_level && 
-        !['lots', 'moderate', 'limited'].includes(insertData.seating_level)) {
+    if (
+      insertData.seating_level &&
+      !["lots", "moderate", "limited"].includes(insertData.seating_level)
+    ) {
       return {
         success: false,
         data: null,
-        error: 'Seating level must be one of: lots, moderate, or limited'
+        error: "Seating level must be one of: lots, moderate, or limited",
       };
     }
 
     // Insert into database
     const { data, error } = await supabase
-      .from('coffee_shops')
+      .from("coffee_shops")
       .insert([insertData])
       .select()
       .single(); // Returns single object instead of array
 
     if (error) {
-      console.error('Supabase error:', error);
+      console.error("Supabase error:", error);
       return {
         success: false,
         data: null,
-        error: error.message || 'Failed to create coffee shop'
+        error: error.message || "Failed to create coffee shop",
       };
     }
 
@@ -96,16 +98,61 @@ export async function createCoffeeShop(shopData) {
     return {
       success: true,
       data: data,
-      error: null
+      error: null,
     };
-
   } catch (error) {
     // Handle unexpected errors
-    console.error('Unexpected error creating coffee shop:', error);
+    console.error("Unexpected error creating coffee shop:", error);
     return {
       success: false,
       data: null,
-      error: error.message || 'An unexpected error occurred'
+      error: error.message || "An unexpected error occurred",
+    };
+  }
+}
+
+/**
+ * Deletes a coffee shop by ID.
+ *
+ * Thanks to the foreign key with `ON DELETE CASCADE` in the database schema,
+ * deleting a shop will automatically delete all related entries
+ * in the `coffee_entries` table.
+ *
+ * @param {string} shopId - UUID of the coffee shop to delete
+ * @returns {Promise<{success: boolean, error: string|null}>}
+ */
+export async function deleteCoffeeShop(shopId) {
+  try {
+    if (!shopId || shopId.trim() === "") {
+      return {
+        success: false,
+        error: "Shop ID is required to delete a coffee shop",
+      };
+    }
+
+    const { error } = await supabase
+      .from("coffee_shops")
+      .delete()
+      .eq("id", shopId);
+
+    if (error) {
+      console.error("Supabase error deleting shop:", error);
+      return {
+        success: false,
+        error: error.message || "Failed to delete coffee shop",
+      };
+    }
+
+    return {
+      success: true,
+      error: null,
+    };
+  } catch (error) {
+    console.error("Unexpected error deleting coffee shop:", error);
+    return {
+      success: false,
+      error:
+        error.message || "An unexpected error occurred while deleting the shop",
     };
   }
 }
